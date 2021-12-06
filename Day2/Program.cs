@@ -28,3 +28,21 @@ foreach (var (commandType, value) in instructions)
 }
 
 Console.WriteLine($"Day 2-1 final location {currentPosition} => {currentPosition.X * currentPosition.Y}");
+
+Console.WriteLine("Hello Day 2-2!");
+
+(int X, long Y, int Aim) currentPos = (X: 0, Y: 0, Aim: 0);
+foreach (var (commandType, value) in instructions)
+{
+	currentPos = commandType switch
+	{
+		CommandTypes.Forward => (currentPos.X + value, currentPos.Y + value * currentPos.Aim, currentPos.Aim),
+		CommandTypes.Up => (currentPos.X, currentPos.Y, currentPos.Aim - value),
+		CommandTypes.Down => (currentPos.X, currentPos.Y, currentPos.Aim + value),
+		_ => throw new NotSupportedException()
+	};
+
+	Console.WriteLine($"Current instruction: {commandType}-{value} => new result: {currentPos}");
+}
+
+Console.WriteLine($"Day 2-2 final location {currentPos} => {currentPos.X * currentPos.Y}");
