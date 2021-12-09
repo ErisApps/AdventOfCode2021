@@ -38,17 +38,9 @@ List<int> CalculateOverlapField(IEnumerable<((int x, int y) startCoordinate, (in
 		if (xDiff > 0)
 		{
 			// Should be able to cover both horizontal and diagonal lines
-			for (var i = startCoordinate.x + (startCoordinate.y * combinedXMax); i <= endCoordinate.x + (endCoordinate.y * combinedXMax); i++)
+			for (var i = 0; i <= xDiff; i++)
 			{
-				field[i]++;
-				if (yDiff > 0)
-				{
-					i += combinedXMax;
-				}
-				else if (yDiff < 0)
-				{
-					i -= combinedXMax;
-				}
+				field[startCoordinate.x + i + (startCoordinate.y * combinedXMax + i * combinedXMax * (yDiff == 0 ? 0 : yDiff > 0 ? 1 : -1))]++;
 			}
 		}
 		else
@@ -71,3 +63,9 @@ var filteredLineData = thermalVentLineData.Where(lineEntry => lineEntry.startCoo
 var fieldData = CalculateOverlapField(filteredLineData);
 
 Console.WriteLine($"Day 5-1 overlapping coordinate count {fieldData.Count(x => x >= 2)}");
+
+Console.WriteLine("Hello Day 5-2!");
+
+fieldData = CalculateOverlapField(thermalVentLineData);
+
+Console.WriteLine($"Day 5-2 overlapping coordinate count {fieldData.Count(x => x >= 2)}");
